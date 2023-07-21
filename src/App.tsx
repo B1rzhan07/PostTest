@@ -15,7 +15,6 @@ function App() {
         <TextField
           sx={{
             backgroundColor: '#5A5C66',
-            color: '#B2B7BF',
             width: '100%',
             maxWidth: '631px',
             marginLeft: '16px',
@@ -25,6 +24,7 @@ function App() {
           value={value}
           onChange={handleChange}
           fullWidth
+          autoFocus
           InputProps={{
             endAdornment: (
               <Search

@@ -6,7 +6,7 @@ import { IPost } from '../../services/Post'
 
 interface TableHelperProps {
   filteredData: IPost[]
-  sortOrder: 'asc' | 'desc'
+  sortOrder: 'asc' | 'desc' | ''
   sortingColumn: 'id' | 'title' | 'body'
   handleChangeSortOrder: (column: 'id' | 'title' | 'body') => void
   isMobile: boolean
@@ -19,6 +19,8 @@ const TableHelper: React.FC<TableHelperProps> = ({
   handleChangeSortOrder,
   isMobile,
 }) => {
+  console.log(sortOrder, sortingColumn)
+
   return (
     <Table sx={{ minWidth: 300 }} aria-label="customized table">
       <TableHead>
@@ -39,8 +41,8 @@ const TableHelper: React.FC<TableHelperProps> = ({
                   cursor: 'pointer',
                   transform:
                     sortOrder === 'asc' && sortingColumn === 'id'
-                      ? ''
-                      : 'rotate(180deg)',
+                      ? 'rotate(180deg)'
+                      : '',
                 }}
               />
             </div>

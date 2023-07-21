@@ -7,7 +7,8 @@ interface TableData {
   totalPages: number;
   isLoading: boolean;
   itemsPerPage: number;
-  sortOrder: "asc" | "desc";
+
+  sortOrder: "asc" | "desc" | "";
   sortingColumn: "id" | "title" | "body";
   handleChangePage: (
     event: React.ChangeEvent<unknown>,
@@ -19,7 +20,7 @@ interface TableData {
 const useCustomizedTables = (value: string): TableData => {
   const { data, isLoading } = useGetPostsQuery("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | "">("");
   const itemsPerPage = 10;
   const sortingColumns: ("id" | "title" | "body")[] = ["id", "title", "body"];
   const [sortingColumn, setSortingColumn] = useState<"id" | "title" | "body">(
@@ -53,14 +54,17 @@ const useCustomizedTables = (value: string): TableData => {
     setCurrentPage(newPage);
   };
 
-  const handleChangeSortOrder = (column: "id" | "title" | "body") => {
-    if (column === sortingColumn && sortOrder === "asc") {
-      setSortOrder("desc");
-    } else {
-      setSortingColumn(column);
-      setSortOrder("asc");
-    }
-  };
+  const handleChangeSortOrder = React.useCallback(
+    (column: "id" | "title" | "body") => {
+      if (column === sortingColumn && sortOrder === "asc") {
+        setSortOrder("desc");
+      } else {
+        setSortingColumn(column);
+        setSortOrder("asc");
+      }
+    },
+    [sortingColumn, sortOrder]
+  );
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
